@@ -44,6 +44,12 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'categories' => ['test'],
+                    'levels' => ['info'],
+                    'logVars' => []
+                ],
             ],
         ],
         'db' => $db,
@@ -53,6 +59,9 @@ $config = [
             'rules' => [
             ],
         ],
+        'eventHandler' => [
+            'class' => 'app\components\events\EventHandler',
+        ]
     ],
     'params' => $params,
 ];

@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\base\Event;
+use app\modules\subs\models\Subscribers;
+use app\components\events\EventHandler;
 
 class SiteController extends Controller
 {
@@ -77,6 +80,10 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            // подписка на событие Входа
+            Yii::$app->eventHandler->on(EventHandler::EVENT_LOGIN, [EventHandler::class,'login'], ['event_id' => Subscribers::EVENT_LOGIN]);
+            Yii::$app->eventHandler->trigger(EventHandler::EVENT_LOGIN);
+            
             return $this->goBack();
         }
 

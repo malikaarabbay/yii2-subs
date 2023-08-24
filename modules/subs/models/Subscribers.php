@@ -82,6 +82,17 @@ class Subscribers extends ActiveRecord
     }
 
     /**
+     * Возвращает активных подписчиков по конкретному событию
+     *
+     * @param int $event_id
+     * @return array
+     */
+    public static function getSubscribersByEventId($event_id)
+    {
+        return self::find()->where(['event_id' => $event_id, 'is_blocked' => 0])->all();
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
